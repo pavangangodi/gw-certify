@@ -1,18 +1,4 @@
-import type { DashboardData, DomainCategory, PracticeQuestion, TestResult, TestSession, User } from "./types";
-
-export const demoUser: User = {
-  id: "user-demo",
-  name: "Pavan Learner",
-  email: "student@gwcertify.local",
-  role: "USER"
-};
-
-export const demoAdmin: User = {
-  id: "admin-demo",
-  name: "GW Admin",
-  email: "admin@gwcertify.local",
-  role: "ADMIN"
-};
+import type { DashboardData, DomainCategory, PracticeQuestion, TestResult, TestSession } from "./types";
 
 export const domains: DomainCategory[] = [
   {
@@ -44,12 +30,6 @@ export const domains: DomainCategory[] = [
     name: "Manual Testing",
     description: "STLC, test design, defect lifecycle, regression, smoke, and UAT.",
     color: "slate"
-  },
-  {
-    id: "playwright-automation",
-    name: "Playwright Automation",
-    description: "Locators, fixtures, assertions, reports, CI, and reliable automation.",
-    color: "cyan"
   },
   {
     id: "api-testing",
@@ -147,16 +127,6 @@ export const questionBank: PracticeQuestion[] = [
     tags: ["STLC", "regression"]
   },
   {
-    id: "q-playwright-1",
-    domainId: "playwright-automation",
-    prompt: "Which Playwright locator strategy is usually most resilient for user-facing actions?",
-    options: ["CSS nth-child selectors only", "Role and accessible name based locators", "Absolute XPath from html", "Random timeouts"],
-    answerIndex: 1,
-    explanation: "Role-based locators reflect user-visible semantics and are less brittle than implementation-specific selectors.",
-    difficulty: "ASSOCIATE",
-    tags: ["locators", "automation design"]
-  },
-  {
     id: "q-api-1",
     domainId: "api-testing",
     prompt: "Which status code generally means a request succeeded and returned a response body?",
@@ -205,5 +175,35 @@ export const demoResult: TestResult = {
     { domainId: "manual-testing", domainName: "Manual Testing", correct: 2, total: 2, accuracy: 100 },
     { domainId: "claimcenter", domainName: "ClaimCenter", correct: 2, total: 2, accuracy: 100 }
   ],
-  weakAreas: ["API Testing", "PolicyCenter Rules"]
+  weakAreas: ["API Testing", "PolicyCenter Rules"],
+  questionReview: [
+    {
+      questionId: "q-policy-1",
+      domainId: "policycenter",
+      domainName: "Guidewire PolicyCenter",
+      prompt: "What is PolicyCenter primarily used for?",
+      options: ["Billing application", "Policy administration system", "CRM tool", "Database backup tool"],
+      selectedIndexes: [0],
+      correctIndexes: [1],
+      selectedOptions: ["Billing application"],
+      correctOptions: ["Policy administration system"],
+      isAnswered: true,
+      isCorrect: false,
+      explanation: "PolicyCenter supports policy administration workflows such as submissions, renewals, changes, and cancellations."
+    },
+    {
+      questionId: "q-api-1",
+      domainId: "api-testing",
+      domainName: "API Testing",
+      prompt: "Which status code generally means a request succeeded and returned a response body?",
+      options: ["200", "401", "404", "500"],
+      selectedIndexes: [],
+      correctIndexes: [0],
+      selectedOptions: [],
+      correctOptions: ["200"],
+      isAnswered: false,
+      isCorrect: false,
+      explanation: "HTTP 200 OK indicates that the request succeeded."
+    }
+  ]
 };

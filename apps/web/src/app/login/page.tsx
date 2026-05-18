@@ -11,8 +11,8 @@ import { useAuth } from "@/components/providers/auth-provider";
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const [email, setEmail] = React.useState("student@gwcertify.local");
-  const [password, setPassword] = React.useState("password123");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [pending, setPending] = React.useState(false);
 
@@ -57,7 +57,7 @@ export default function LoginPage() {
           {[
             ["60", "Question palette"],
             ["1.5m", "Per question"],
-            ["7", "Exam domains"]
+            ["6", "Exam domains"]
           ].map(([value, label]) => (
             <div key={label} className="rounded-lg border border-border bg-card p-4">
               <p className="text-2xl font-semibold text-primary">{value}</p>
@@ -80,11 +80,27 @@ export default function LoginPage() {
             <form className="grid gap-4" onSubmit={handleSubmit}>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+                <Input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+                <Input
+                  id="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                />
               </div>
               {error ? <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">{error}</p> : null}
               <Button type="submit" disabled={pending}>

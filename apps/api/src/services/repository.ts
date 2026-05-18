@@ -9,6 +9,7 @@ import type {
   ParsedQuestion,
   PredefinedQuestionSet,
   Question,
+  QuestionReviewItem,
   StoredUser,
   TestResult,
   TestSession,
@@ -31,24 +32,7 @@ const durationByQuestionCount: Record<number, number> = {
   200: 300
 };
 
-const users: StoredUser[] = [
-  {
-    id: "user-demo",
-    name: "Pavan Learner",
-    email: "student@gwcertify.local",
-    role: "USER",
-    passwordHash: bcrypt.hashSync("password123", 10),
-    createdAt: new Date().toISOString()
-  },
-  {
-    id: "admin-demo",
-    name: "GW Admin",
-    email: "admin@gwcertify.local",
-    role: "ADMIN",
-    passwordHash: bcrypt.hashSync("password123", 10),
-    createdAt: new Date().toISOString()
-  }
-];
+const users: StoredUser[] = [];
 
 let questions: Question[] = [...seedQuestions];
 const predefinedQuestions: Question[] = predefinedQuestionSets.flatMap((set) =>
@@ -595,10 +579,13 @@ function buildResult(session: TestSession, selectedQuestions: Question[], timeTa
   let correctAnswers = 0;
   const domainMap = new Map<string, { domainName: string; correct: number; total: number }>();
   const domainLookup = new Map(seedDomains.map((domain) => [domain.id, domain.name]));
+  const questionReview: QuestionReviewItem[] = [];
 
   for (const question of selectedQuestions) {
-    const givenAnswer = session.answers[question.id];
-    const correctDisplayedIndexes = getCorrectDisplayedIndexes(question, session.optionOrders[question.id]);
+    const optionOrder = session.optionOrders[question.id] ?? question.options.map((_option, index) => index);
+    const displayedOptions = optionOrder.map((optionIndex) => question.options[optionIndex]);
+    const givenAnswer = session.answers[question.id] ?? [];
+    const correctDisplayedIndexes = getCorrectDisplayedIndexes(question, optionOrder);
     const isAnswered = Array.isArray(givenAnswer) && givenAnswer.length > 0;
     const isCorrect = isAnswered && sameNumberSet(givenAnswer, correctDisplayedIndexes);
 
@@ -611,6 +598,20 @@ function buildResult(session: TestSession, selectedQuestions: Question[], timeTa
     current.total += 1;
     current.correct += isCorrect ? 1 : 0;
     domainMap.set(question.domainId, current);
+    questionReview.push({
+      questionId: question.id,
+      domainId: question.domainId,
+      domainName,
+      prompt: question.prompt,
+      options: displayedOptions,
+      selectedIndexes: givenAnswer,
+      correctIndexes: correctDisplayedIndexes,
+      selectedOptions: givenAnswer.map((index) => displayedOptions[index]).filter(Boolean),
+      correctOptions: correctDisplayedIndexes.map((index) => displayedOptions[index]).filter(Boolean),
+      isAnswered,
+      isCorrect,
+      explanation: question.explanation
+    });
   }
 
   const total = selectedQuestions.length;
@@ -637,7 +638,8 @@ function buildResult(session: TestSession, selectedQuestions: Question[], timeTa
     weakAreas: topicBreakdown
       .filter((topic) => topic.accuracy < 75)
       .sort((a, b) => a.accuracy - b.accuracy)
-      .map((topic) => topic.domainName)
+      .map((topic) => topic.domainName),
+    questionReview
   };
 }
 

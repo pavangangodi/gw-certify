@@ -57,7 +57,7 @@ export function AdminView() {
             <CardDescription>Assemble certification practice sets from uploaded banks.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-3">
-            {["PolicyCenter Associate Practice", "BillingCenter Domain Sprint", "Playwright Automation Mixed"].map((test) => (
+            {["PolicyCenter Associate Practice", "BillingCenter Domain Sprint", "API Testing Mixed"].map((test) => (
               <div key={test} className="flex items-center justify-between gap-3 rounded-lg border border-border bg-background/55 p-4">
                 <div>
                   <p className="font-medium">{test}</p>
@@ -114,8 +114,7 @@ export function AdminView() {
             </thead>
             <tbody>
               {[
-                ["Pavan Learner", "student@gwcertify.local", "USER", "6"],
-                ["GW Admin", "admin@gwcertify.local", "ADMIN", "3"]
+                [user?.name ?? "Current user", user?.email ?? "Signed-in account", user?.role ?? "USER", analytics.completedTests.toString()]
               ].map(([name, email, role, tests]) => (
                 <tr key={email}>
                   <td className="border-b border-border px-4 py-3 font-medium">{name}</td>

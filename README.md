@@ -39,7 +39,7 @@ Note: Choose 2 options
 - Predefined sets include 57 questions in Set 1, 56 in Set 2, 52 in Set 3, and 108 in Set 4.
 - Upload rounds started from an upload use only questions from that uploaded document.
 - User question coverage is rotated so remaining unseen questions are selected before repeats.
-- Domain categories for PolicyCenter, ClaimCenter, BillingCenter, Insurance Domain, Manual Testing, Playwright Automation, and API Testing.
+- Domain categories for PolicyCenter, ClaimCenter, BillingCenter, Insurance Domain, Manual Testing, and API Testing.
 - Results page with score, accuracy, time taken, correct/wrong/unanswered counts, topic-wise performance, and weak areas.
 - Admin panel for question bank, user, test, and analytics management.
 - Prisma PostgreSQL schema and seed script.
@@ -80,12 +80,7 @@ npm.cmd run start
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Demo accounts:
-
-```text
-student@gwcertify.local / password123
-admin@gwcertify.local / password123
-```
+Create a new account from the register page, then log in with that account.
 
 ## Development
 

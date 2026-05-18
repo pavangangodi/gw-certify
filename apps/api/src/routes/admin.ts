@@ -16,10 +16,7 @@ router.get(
 
 router.get("/users", (_req, res) => {
   return res.json({
-    users: [
-      { id: "user-demo", name: "Pavan Learner", email: "student@gwcertify.local", role: "USER", testsTaken: 6 },
-      { id: "admin-demo", name: "GW Admin", email: "admin@gwcertify.local", role: "ADMIN", testsTaken: 3 }
-    ]
+    users: []
   });
 });
 

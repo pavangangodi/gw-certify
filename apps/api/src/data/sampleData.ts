@@ -32,12 +32,6 @@ export const domains: DomainCategory[] = [
     color: "slate"
   },
   {
-    id: "playwright-automation",
-    name: "Playwright Automation",
-    description: "Locator strategy, fixtures, assertions, reports, CI, and reliable automation design.",
-    color: "cyan"
-  },
-  {
     id: "api-testing",
     name: "API Testing",
     description: "HTTP methods, status codes, payload validation, auth, contract, and negative testing.",
@@ -139,18 +133,6 @@ export const questions: Question[] = [
     explanation: "Regression testing checks whether recent changes broke previously working behavior.",
     difficulty: "FOUNDATION",
     tags: ["STLC", "regression"],
-    createdAt: new Date().toISOString(),
-    source: "Sample bank"
-  },
-  {
-    id: "q-playwright-1",
-    domainId: "playwright-automation",
-    prompt: "Which Playwright locator strategy is usually most resilient for user-facing actions?",
-    options: ["CSS nth-child selectors only", "Role and accessible name based locators", "Absolute XPath from html", "Random timeouts"],
-    answerIndex: 1,
-    explanation: "Role-based locators reflect user-visible semantics and are less brittle than implementation-specific selectors.",
-    difficulty: "ASSOCIATE",
-    tags: ["locators", "automation design"],
     createdAt: new Date().toISOString(),
     source: "Sample bank"
   },

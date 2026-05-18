@@ -1,4 +1,4 @@
-import { dashboardData, demoAdmin, demoResult, demoSession, demoUser, domains, questionBank } from "./mock-data";
+import { dashboardData, demoResult, demoSession, domains, questionBank } from "./mock-data";
 import type { DashboardData, DomainCategory, PredefinedQuestionSet, TestResult, TestSession, UploadBank, User } from "./types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
@@ -36,36 +36,17 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}, tok
 }
 
 export async function login(email: string, password: string): Promise<AuthResponse> {
-  try {
-    return await apiRequest<AuthResponse>("/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password })
-    });
-  } catch (error) {
-    if (password === "password123" && email === demoAdmin.email) {
-      return { user: demoAdmin, token: "mock-admin-token" };
-    }
-
-    if (password === "password123") {
-      return { user: demoUser, token: "mock-user-token" };
-    }
-
-    throw error;
-  }
+  return apiRequest<AuthResponse>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ email, password })
+  });
 }
 
 export async function register(name: string, email: string, password: string): Promise<AuthResponse> {
-  try {
-    return await apiRequest<AuthResponse>("/auth/register", {
-      method: "POST",
-      body: JSON.stringify({ name, email, password })
-    });
-  } catch {
-    return {
-      user: { ...demoUser, id: `mock-${Date.now()}`, name, email },
-      token: "mock-user-token"
-    };
-  }
+  return apiRequest<AuthResponse>("/auth/register", {
+    method: "POST",
+    body: JSON.stringify({ name, email, password })
+  });
 }
 
 export async function getDashboard(token: string): Promise<DashboardData> {

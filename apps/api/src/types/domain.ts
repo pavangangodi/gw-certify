@@ -107,6 +107,22 @@ export interface TestResult {
   unanswered: number;
   topicBreakdown: TopicPerformance[];
   weakAreas: string[];
+  questionReview: QuestionReviewItem[];
+}
+
+export interface QuestionReviewItem {
+  questionId: string;
+  domainId: string;
+  domainName: string;
+  prompt: string;
+  options: string[];
+  selectedIndexes: number[];
+  correctIndexes: number[];
+  selectedOptions: string[];
+  correctOptions: string[];
+  isAnswered: boolean;
+  isCorrect: boolean;
+  explanation?: string;
 }
 
 export interface ParsedQuestion {
