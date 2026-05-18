@@ -1,0 +1,34 @@
+{
+  "name": "gw-certify",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GW Certify certification-style MCQ testing platform.",
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "packages/db"
+  ],
+  "scripts": {
+    "postinstall": "prisma generate --schema packages/db/prisma/schema.prisma",
+    "dev": "concurrently -n web,api -c cyan,blue \"npm run dev --workspace @gw-certify/web\" \"npm run dev --workspace @gw-certify/api\"",
+    "dev:web": "npm run dev --workspace @gw-certify/web",
+    "dev:api": "npm run dev --workspace @gw-certify/api",
+    "build": "npm run build --workspace @gw-certify/web && npm run build --workspace @gw-certify/api",
+    "start": "concurrently -n web,api -c cyan,blue \"npm run start --workspace @gw-certify/web\" \"npm run start --workspace @gw-certify/api\"",
+    "db:generate": "prisma generate --schema packages/db/prisma/schema.prisma",
+    "db:push": "prisma db push --schema packages/db/prisma/schema.prisma",
+    "db:seed": "tsx packages/db/seed/seed.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prisma": "^6.7.0",
+    "tsx": "^4.19.4"
+  },
+  "overrides": {
+    "next": {
+      ".": "16.2.6",
+      "postcss": "8.5.14"
+    },
+    "postcss": "8.5.14"
+  }
+}

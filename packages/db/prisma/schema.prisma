@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum Difficulty {
+  FOUNDATION
+  ASSOCIATE
+  PROFESSIONAL
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         UserRole      @default(USER)
+  sessions     TestSession[]
+  uploads      Upload[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Domain {
+  id           String        @id
+  name         String        @unique
+  description  String
+  color        String
+  questions    Question[]
+  sessions     TestSession[]
+  uploads      Upload[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Question {
+  id          String     @id @default(cuid())
+  domainId    String
+  domain      Domain     @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  uploadId    String?
+  upload      Upload?    @relation(fields: [uploadId], references: [id], onDelete: Cascade)
+  prompt      String
+  options     Json
+  answerIndex Int
+  answerIndexes Json?
+  explanation String
+  difficulty  Difficulty @default(ASSOCIATE)
+  tags        Json
+  source      String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([domainId])
+  @@index([uploadId])
+}
+
+model TestSession {
+  id               String        @id @default(cuid())
+  userId           String
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domainId         String?
+  domain           Domain?       @relation(fields: [domainId], references: [id], onDelete: SetNull)
+  uploadId         String?
+  upload           Upload?       @relation(fields: [uploadId], references: [id], onDelete: SetNull)
+  predefinedSetId  String?
+  testName         String
+  durationMinutes  Int
+  questionIds      Json
+  answers          Json
+  markedForReview  Json
+  optionOrders     Json?
+  status           SessionStatus @default(IN_PROGRESS)
+  score            Int?
+  accuracy         Int?
+  timeTakenSeconds Int?
+  topicBreakdown   Json?
+  startedAt        DateTime      @default(now())
+  submittedAt      DateTime?
+  updatedAt        DateTime      @updatedAt
+
+  @@index([userId, status])
+}
+
+model Upload {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  domainId      String
+  domain        Domain   @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  questions     Question[]
+  sessions      TestSession[]
+  fileName      String
+  questionCount Int
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([domainId])
+}

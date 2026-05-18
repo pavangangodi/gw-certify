@@ -1,0 +1,20 @@
+Q1. What is PolicyCenter?
+A. Billing application
+B. Policy administration system
+C. CRM tool
+D. Database
+Answer: B
+
+Q2. Which transaction is used to modify an existing policy?
+A. Policy Change
+B. Subrogation
+C. Invoice
+D. Exposure
+Answer: A
+
+Q3. What does a regression test confirm?
+A. New code has no comments
+B. Existing functionality still works after changes
+C. The database is empty
+D. The UI uses one color only
+Answer: B
