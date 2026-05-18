@@ -8,3 +8,7 @@ coverage/
 uploads/
 *.log
 prisma/dev.db
+apps/web/out/
+
+# Local Netlify folder
+.netlify

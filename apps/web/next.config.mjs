@@ -7,7 +7,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   reactStrictMode: true,
   devIndicators: false,
-  outputFileTracingRoot: path.join(__dirname, "../..")
+  output: "export",
+  turbopack: {
+    root: path.join(__dirname, "../..")
+  }
 };
 
 export default nextConfig;

@@ -30,5 +30,8 @@
       "postcss": "8.5.14"
     },
     "postcss": "8.5.14"
+  },
+  "dependencies": {
+    "serverless-http": "^4.0.0"
   }
 }

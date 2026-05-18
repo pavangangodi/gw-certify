@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "apps/web/out"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+  USE_MOCK_DB = "true"
+  NEXT_PUBLIC_API_URL = "/api"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/health"
+  to = "/.netlify/functions/api/health"
+  status = 200
